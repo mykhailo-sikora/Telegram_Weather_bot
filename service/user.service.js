@@ -16,11 +16,19 @@ module.exports = {
     },
     getAll: () => {
         const UserModel = db.getModels(USER);
-        return UserModel.findAll();
+        return UserModel.findAll({
+            where: {
+                city: {
+                    [Op.ne]: null
+                }
+            }
+        });
     },
-    getByParams: (params)=>{
+    getByParams: (params) => {
         const UserModel = db.getModels(USER);
         return UserModel.findOne({where: params});
     }
 
 };
+
+//TODO: nest: true, raw: true

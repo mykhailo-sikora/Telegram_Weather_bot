@@ -35,9 +35,9 @@ Hint here: 👉 /help`)
 init(new Telegraf(TOKEN)).then(async (bot) => {
     await bot.telegram.setWebhook(`${URL}/bot${TOKEN}`);
     await bot.startWebhook(`/bot${TOKEN}`, null, PORT);
-    console.log('start')
-    // await bot.launch();
-    // console.log(`started ${new Date()}`)
+    console.log('start hook')
+    await bot.launch();
+    console.log(`started ${new Date()}`)
 });
 
 module.exports = init;
@@ -45,3 +45,6 @@ module.exports = init;
 process.on("unhandledRejection", () => process.exit(0));
 
 
+// const {cron} = require('./crons');
+// cron();
+//
