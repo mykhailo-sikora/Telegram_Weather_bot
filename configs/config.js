@@ -1,8 +1,8 @@
 const logger = require('./winston');
 
 module.exports = {
-    PORT: process.env.PORT || 3000,
-
+    PORT: process.env.PORT || 'port',
+    URL: process.env.URL || 'url',
     DB_NAME: process.env.DB_NAME || 'shop',
     DB_HOST: process.env.DB_HOST || 'localhost',
     DB_USER: process.env.DB_USER || 'root',

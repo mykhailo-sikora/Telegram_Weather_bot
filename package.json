@@ -36,5 +36,8 @@
     "nodemon": "^2.0.4",
     "telegraf": "^3.38.0",
     "mysql2": "^2.1.0"
+  },
+  "engines": {
+    "node": "12.x"
   }
 }

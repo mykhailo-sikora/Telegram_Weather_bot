@@ -3,7 +3,7 @@ require('dotenv').config();
 const Telegraf = require('telegraf');
 
 require('./dataBase').getInstance().setModels();
-const {config: {TOKEN}} = require('./configs');
+const {config: {TOKEN, PORT, URL}} = require('./configs');
 
 const session = require('telegraf/session');
 const Stage = require('telegraf/stage');
@@ -23,7 +23,6 @@ const init = async (bot) => {
     bot.command('unsubscribe', ctx => (ctx.scene.enter('unsubscribe')));
     bot.on('message', async ctx => {
         const {first_name} = ctx.from;
-        const {text} = ctx.message;
         ctx.reply(`It's cool, ${first_name}(!) but use please the commands! 
 Maybe in the future, I will be smarter or not 😜
 
@@ -34,8 +33,11 @@ Hint here: 👉 /help`)
 };
 
 init(new Telegraf(TOKEN)).then(async (bot) => {
-    await bot.launch();
-    console.log(`started ${new Date()}`)
+    await bot.telegram.setWebhook(`${URL}/bot${TOKEN}`);
+    await bot.startWebhook(`/bot${TOKEN}`, null, PORT);
+    console.log('start')
+    // await bot.launch();
+    // console.log(`started ${new Date()}`)
 });
 
 module.exports = init;
