@@ -4,7 +4,7 @@ module.exports = () => async (ctx) => {
     
 /start - Start bot;
 /write - Write city and take information about weather;
-/save  - the bot will send the current weather in your city every morning (in development);
+/save  - Send the current weather in your city every morning;
 /unsubscribe - Unsubscribe from daily weather information;
 
 /help  - User help.

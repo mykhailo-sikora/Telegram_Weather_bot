@@ -1,4 +1,6 @@
+const {Op} = require('sequelize')
 const db = require('../dataBase').getInstance();
+
 const {modelNameEnum: {USER}} = require('../constants');
 
 module.exports = {
@@ -21,14 +23,10 @@ module.exports = {
                 city: {
                     [Op.ne]: null
                 }
-            }
+            },
+            nest: true,
+            raw: true
         });
     },
-    getByParams: (params) => {
-        const UserModel = db.getModels(USER);
-        return UserModel.findOne({where: params});
-    }
-
 };
 
-//TODO: nest: true, raw: true

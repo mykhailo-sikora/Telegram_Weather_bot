@@ -1,7 +1,5 @@
 node_modules
 package-lock.json
 .env
-crons
-helpers
 Telegram_bot.patch
 app.copy.js

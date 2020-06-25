@@ -1,6 +1,6 @@
 const Scene = require('telegraf/scenes/base');
-
 const axios = require('axios');
+
 const {config: {API, KEY}} = require('../configs');
 
 const write = new Scene('write');
@@ -22,7 +22,7 @@ write.on('message', async ctx => {
         if (!infoAboutWeather?.location?.name) return ctx.reply(`${first_name}, sorry, but this city not found ❌☹❌`);
 
         const {name, country, localtime} = infoAboutWeather.location;
-        const {temperature, weather_descriptions, weather_icons} = infoAboutWeather.current;
+        const {temperature, weather_descriptions} = infoAboutWeather.current;
         await ctx.replyWithMarkdown(
             ` *${first_name}*, weather in *${name}*, *${country}* at *${localtime}* 👍 
 Temperature: *${temperature}* 🌡️
@@ -36,7 +36,7 @@ Description: *${weather_descriptions}*  📄
 
 write.leave(async ctx => {
     const {first_name} = ctx.from;
-    await ctx.reply(`${first_name}, see u later, bye`)
+    await ctx.reply(`Another city❓ - /write 😏`)
 });
 
 module.exports = write;

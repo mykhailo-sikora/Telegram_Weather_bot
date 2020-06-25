@@ -1,13 +1,12 @@
 require('dotenv').config();
+require('./dataBase').getInstance().setModels();
 
 const Telegraf = require('telegraf');
-
-require('./dataBase').getInstance().setModels();
-const {config: {TOKEN, PORT, URL}} = require('./configs');
-
 const session = require('telegraf/session');
 const Stage = require('telegraf/stage');
 
+const {config: {TOKEN, PORT, URL}} = require('./configs');
+const {cron} = require('./crons');
 const {writeScene, saveScene, unsubscribedScene} = require('./scenes');
 const {startCommand, helpCommand} = require('./commands');
 
@@ -35,16 +34,12 @@ Hint here: 👉 /help`)
 init(new Telegraf(TOKEN)).then(async (bot) => {
     await bot.telegram.setWebhook(`${URL}/bot${TOKEN}`);
     await bot.startWebhook(`/bot${TOKEN}`, null, PORT);
-    console.log('start hook')
     await bot.launch();
-    console.log(`started ${new Date()}`)
 });
 
 module.exports = init;
 
 process.on("unhandledRejection", () => process.exit(0));
 
+cron();
 
-// const {cron} = require('./crons');
-// cron();
-//
