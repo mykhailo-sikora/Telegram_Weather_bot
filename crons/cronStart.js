@@ -9,7 +9,7 @@ const {userService} = require('../service');
 const bot = new Telegraf(TOKEN);
 
 module.exports = () => {
-    const job = new CronJob('* 05 10 * * *', async () => {
+    const job = new CronJob('00 10 10 * * *', async () => {
         try {
             const users = await userService.getAll();
             for (const user of users) {
@@ -21,7 +21,8 @@ module.exports = () => {
                 const {name, country, localtime} = infoAboutWeather.location;
                 const {temperature, weather_descriptions} = infoAboutWeather.current;
 
-                await bot.telegram.sendMessage(`${telegramId}`, `📢 Hey, it's daily weather ${userName}, in ${name}, ${country} at ${localtime}. 
+                await bot.telegram.sendMessage(`${telegramId}`, `📢 Hey, it's daily weather! 🥰  
+${userName}, in ${name}, ${country} at ${localtime}.                 
 Temperature: ${temperature} 🌡️
 Description: ${weather_descriptions}
        `);

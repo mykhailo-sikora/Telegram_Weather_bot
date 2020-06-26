@@ -1,9 +1,7 @@
 const Scene = require('telegraf/scenes/base');
-const axios = require('axios');
 
-const {config: {API, KEY}} = require('../configs');
-const {userService} = require('../service')
-
+const {userService, userServiceConnect} = require('../service')
+const {middleware} = require('../middleware');
 const save = new Scene('save');
 
 save.enter(async ctx => {
@@ -12,22 +10,25 @@ Please, send me name of your city.
 Thank you 🥰`);
 });
 
-save.on('message', async ctx => {
+save.on('message', async (ctx, next) => {
     try {
         const {id, first_name} = ctx.from;
         let {text} = ctx.message;
 
-        const data = await axios.get(`${API}` + `${KEY}` + `${text}`);
+        const data = await userServiceConnect.connecting(text);
         const infoAboutWeather = data.data;
+        if (middleware.isValidCity(ctx, first_name, infoAboutWeather, text)) {
+            await ctx.reply(`Are you sure? Exactly? 🤨 I don't think so 🤭`)
+            return ctx.scene.leave();
+        }
 
-        if (!infoAboutWeather?.location?.name) return ctx.reply(`${first_name}, sorry, but this city not found ❌☹❌`);
 
         const user = await userService.getOne(id);
 
         if (!user) return await userService.create(id, first_name, text);
 
         await userService.update({city: text}, id);
-
+        await ctx.reply(`${first_name}, I'll send you the weather at 10:10 in the morning 🥳 `)
         return ctx.scene.leave();
     } catch (e) {
         console.log(e)
@@ -35,7 +36,7 @@ save.on('message', async ctx => {
 });
 
 save.leave(async ctx => {
-    await ctx.reply('Cool, I`m save your city 😎')
+    await ctx.reply(`Hint here: 👉 /help`)
 });
 
 module.exports = save;

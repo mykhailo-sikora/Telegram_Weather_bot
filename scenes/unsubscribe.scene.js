@@ -14,7 +14,9 @@ unsubscribe.enter(async ctx => {
 });
 
 unsubscribe.leave(async ctx => {
-    await ctx.reply('Done, bye-bye 💔')
+    await ctx.reply(`Done, bye-bye 💔
+    
+Hint here: 👉 /help`)
 });
 
 module.exports = unsubscribe;
