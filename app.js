@@ -39,7 +39,7 @@ init(new Telegraf(TOKEN)).then(async (bot) => {
 
 module.exports = init;
 
-process.on("unhandledRejection", () => process.exit(0));
+//process.on("unhandledRejection", () => process.exit(0));
 
 cron();
 

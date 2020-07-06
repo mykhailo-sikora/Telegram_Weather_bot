@@ -5,10 +5,15 @@ const {middleware} = require('../middleware');
 const write = new Scene('write');
 
 write.enter(async ctx => {
-    const {first_name} = ctx.from;
-    await ctx.reply(`Okay, ${first_name}, please write a city and wait for one second.
+        try {
+            const {first_name} = ctx.from;
+            await ctx.reply(`Okay, ${first_name}, please write a city and wait for one second.
 I'm like a flash 🦸 💨`);
-});
+        } catch (e) {
+            console.log(e)
+        }
+    }
+);
 
 write.on('message', async ctx => {
     try {
@@ -34,9 +39,14 @@ Description: *${weather_descriptions}*  📄
 });
 
 write.leave(async ctx => {
-    await ctx.reply(`Another city❓ - /write 😏
+    try {
+        await ctx.reply(`Another city❓ - /write 😏
     
 Hint here: 👉 /help`)
+    } catch (e) {
+        console.log(e)
+    }
+
 
 });
 

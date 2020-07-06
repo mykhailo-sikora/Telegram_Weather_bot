@@ -5,9 +5,13 @@ const {middleware} = require('../middleware');
 const save = new Scene('save');
 
 save.enter(async ctx => {
-    await ctx.reply(`So, u want save city, it's great news ☺️. 
+    try {
+        await ctx.reply(`So, u want save city, it's great news ☺️. 
 Please, send me name of your city. 
 Thank you 🥰`);
+    } catch (e) {
+        console.log(e)
+    }
 });
 
 save.on('message', async (ctx, next) => {
@@ -22,7 +26,6 @@ save.on('message', async (ctx, next) => {
             return ctx.scene.leave();
         }
 
-
         const user = await userService.getOne(id);
 
         if (!user) return await userService.create(id, first_name, text);
@@ -36,7 +39,12 @@ save.on('message', async (ctx, next) => {
 });
 
 save.leave(async ctx => {
-    await ctx.reply(`Hint here: 👉 /help`)
+    try {
+        await ctx.reply(`Hint here: 👉 /help`)
+    } catch (e) {
+        console.log(e)
+    }
+
 });
 
 module.exports = save;
